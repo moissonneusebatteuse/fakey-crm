@@ -1,8 +1,7 @@
-Birt Report Emitter 
+Random Personal Project
 
-To Compile:
-    -   Install m2e
-    -   Convert to Maven Project
-    -   Update Dependancies
-    -   Run -> Maven Build 
-        -   Goal: package
+A simple list manager, using postgres, Jersey and Akka.
+
+Build to import, du-duplicate and insert into the database
+
+

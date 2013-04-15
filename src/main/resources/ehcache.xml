@@ -1,0 +1,3 @@
+<ehcache>
+<cache name="design-cache" maxElementsInMemory="1000" eternal="false" overflowToDisk="false" timeToIdleSeconds="0" timeToLiveSeconds="0" diskPersistent="false" diskExpiryThreadIntervalSeconds="120"/>
+</ehcache>

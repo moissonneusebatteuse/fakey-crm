@@ -1,0 +1,8 @@
+Birt Report Emitter 
+
+To Compile:
+    -   Install m2e
+    -   Convert to Maven Project
+    -   Update Dependancies
+    -   Run -> Maven Build 
+        -   Goal: package

@@ -1,0 +1,94 @@
+<html>
+<head>
+<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+</head>
+<body>
+<h2>PollingStations</h2>
+<form id="pollingstation">
+name <input name="name" type="text" value="" />
+address <input name="address" type="text" value="" />
+lat <input name="lat" type="text" value="" />
+long <input name="lng" type="text" value="" />
+<input type="submit" class="pollingstation" value="add" />
+
+</form>
+
+<h2>Register Members</h2>
+
+<form id="members">
+name <input name="name" type="text" value="" />
+uuid <input name="uuid" type="text" value="" />
+<input type="submit" class="members" value="add" />
+</form>
+
+<h2>Request Voters</h2>
+<input type="button" class="prompt" value="Prompt to Vote" />
+
+<h2>Does the user need to be prompted to vote?</h2>
+UUID <input type="text" name="promptuser" />  <input type="button" class="check" value="Check" /> <input type="button" class="vote" value="Record Vote" />
+<script>
+$(document).ready(function() {
+
+    $('#pollingstation').submit(function(e){
+        e.preventDefault();
+        $form = $(this);
+        var data = $form.serialize();
+        var url = "/labour/pollingstation/";
+        $.post(url, data, 
+                  function(result){
+                    console.log(result);
+                    $form.reset();
+                  }
+            );
+        return false;
+    });
+
+     $('#members').submit(function(e){
+        e.preventDefault();
+        $form = $(this);
+        var data = $form.serialize();
+        var url = "/labour/device/";
+        $.post(url, data, 
+                  function(result){
+                    console.log(result);
+                    $form.reset();
+                  }
+            );
+        return false;
+    });
+
+    $('.prompt').click(function(e){
+    	$.get('/labour/notify/', function(data) {
+    		alert('Vote Requested');
+    	});
+    });
+    	
+    $('.check').click(function(e){
+    	if ($('[name="promptuser"]').val() == ''){
+    		alert('please enter a uuid');
+    	}
+        $.get('/labour/notify/'+$('[name="promptuser"]').val()+'/', function(data) {            
+            data = $.parseJSON(data);
+        	if (data.notify == true){
+            	alert('Yes - notify the user with the message: '+data.message);
+            } else {
+            	alert('No, no need');
+            }
+        });
+    });
+    $('.vote').click(function(e){
+        if ($('[name="promptuser"]').val() == ''){
+            alert('please enter a uuid');
+        }
+        $.post('/labour/notify/'+$('[name="promptuser"]').val()+'/voted/', {}, function(data) {            
+            if (data.id >= 0){
+                alert('Vote registered');
+            }
+        });
+    });
+});
+</script>
+
+
+</body>
+</html>
